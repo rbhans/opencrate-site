@@ -228,10 +228,10 @@ h2 em { font-style: italic; color: var(--accent); }
       </h1>
 
       <p class="hero-sub">
-        After working with a few different BAS platforms, I thought it'd be
-        fun to try building one from scratch. OpenCrate is that project &mdash;
-        BACnet, Modbus, alarms, schedules, trends, programming &mdash;
-        written in Rust, open source, free forever.
+        After working with a few different BAS platforms, I wanted to understand
+        the parts I'd never normally get to touch &mdash; the protocol layer,
+        the alarm engine, the scheduler internals. Building one from scratch
+        seemed like the best way to learn. OpenCrate is that project.
       </p>
 
       <div class="hero-actions">
@@ -482,9 +482,12 @@ h2 em { font-style: italic; color: var(--accent); }
         <div class="section-label">Status</div>
         <h2>Coming soon.</h2>
         <p>
-          OpenCrate is a hobby project &mdash; something I work on because I find
-          building automation genuinely interesting. It's getting close to a first public
-          release. If you'd like to know when it's available, leave your email below.
+          OpenCrate is a hobby project &mdash; part curiosity, part excuse to dig into
+          the pieces of building automation I never got to work on professionally.
+          Writing a BACnet stack, designing an alarm engine, figuring out how schedule
+          sync actually works &mdash; it's been the best way to learn. It's getting close
+          to a first public release. If you'd like to know when it's available, leave
+          your email below.
         </p>
         <div class="cs-form">
           <input type="email" placeholder="your@email.com" class="cs-input" disabled>
@@ -508,7 +511,7 @@ h2 em { font-style: italic; color: var(--accent); }
         <p>Open-source building management.<br>A hobby project, built with Rust.</p>
       </div>
       <div class="footer-right">
-        <p>Built because building automation<br>is more interesting than it gets credit for.</p>
+        <p>Learning by building the things<br>I was always curious about.</p>
         <p class="footer-copy">MIT License</p>
       </div>
     </div>
