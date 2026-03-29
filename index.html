@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenCrate BMS — Open-Source Building Management</title>
+  <meta name="description" content="A hobby project: an open-source building management system built in Rust. BACnet, Modbus, alarms, scheduling, trend logging — no license fees, forever free.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0F0E0C;
+  --bg-elevated: #1A1816;
+  --bg-card: #1E1C19;
+  --bg-card-hover: #26231F;
+  --border: #2A2723;
+  --border-accent: rgba(196, 122, 90, 0.15);
+  --text: #F0EBE3;
+  --text-secondary: #9E9589;
+  --text-muted: #5E5850;
+  --accent: #C47A5A;
+  --accent-bright: #E09070;
+  --accent-glow: rgba(196, 122, 90, 0.08);
+  --radius: 8px;
+  --radius-lg: 16px;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--accent-bright); }
+
+/* ── Grid bg ── */
+.grid-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+/* ── Nav ── */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15, 14, 12, 0.8); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--text); letter-spacing: -0.02em; }
+.nav-logo img { width: 26px; height: 26px; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { color: var(--text-muted); font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { padding: 6px 16px; border: 1px solid var(--accent); border-radius: 100px; color: var(--accent) !important; font-size: 12px !important; font-weight: 600 !important; letter-spacing: 0.04em !important; }
+.nav-cta:hover { background: var(--accent); color: var(--bg) !important; }
+
+/* ── Shared ── */
+.section-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+.section-label { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
+h2 { font-family: var(--serif); font-size: clamp(36px, 5vw, 56px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 48px; color: var(--text); }
+h2 em { font-style: italic; color: var(--accent); }
+
+/* ── Hero ── */
+.hero { padding: 180px 40px 0; position: relative; z-index: 1; }
+.hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 1200px; height: 900px; background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(196, 122, 90, 0.06) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
+.hero-eyebrow { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 40px; }
+.tag { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.tag-divider { color: var(--border); font-size: 14px; }
+.hero h1 { font-family: var(--serif); font-size: clamp(42px, 6.5vw, 72px); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 32px; color: var(--text); }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-line { display: block; }
+.hero-sub { font-size: 17px; color: var(--text-secondary); line-height: 1.7; max-width: 540px; margin: 0 auto 40px; font-weight: 300; }
+.hero-actions { margin-bottom: 80px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border-radius: 100px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; letter-spacing: 0.01em; }
+.btn-primary { background: var(--accent); color: #0F0E0C; }
+.btn-primary:hover { background: var(--accent-bright); color: #0F0E0C; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196, 122, 90, 0.35); }
+.btn-primary:disabled { opacity: 0.5; cursor: default; transform: none; box-shadow: none; }
+
+/* ── Hero visual ── */
+.hero-visual { max-width: 1060px; margin: 0 auto; position: relative; }
+.hero-visual-frame { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.03); }
+.hero-visual-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: #1A1816; border-bottom: 1px solid var(--border); }
+.bar-dot { width: 10px; height: 10px; border-radius: 50%; background: #2A2723; }
+.bar-dot:first-child { background: #4A3A30; }
+.bar-title { margin-left: 8px; font-family: var(--mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.02em; }
+.hero-visual-frame img { width: 100%; display: block; }
+
+/* ── Marquee ── */
+.marquee-strip { padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; position: relative; z-index: 1; margin-top: 100px; }
+.marquee-track { display: flex; gap: 0; animation: marquee 30s linear infinite; width: max-content; }
+.marquee-track span { font-family: var(--mono); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); white-space: nowrap; padding: 0 8px; }
+.marquee-sep { color: var(--border) !important; padding: 0 4px !important; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── Gallery ── */
+.gallery { padding: 120px 0; position: relative; z-index: 1; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gallery-item { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-elevated); transition: border-color 0.3s, transform 0.3s; }
+.gallery-item:hover { border-color: rgba(196, 122, 90, 0.3); transform: translateY(-3px); }
+.gallery-item.large { grid-column: 1 / -1; }
+.gallery-item img { width: 100%; display: block; }
+.gallery-meta { padding: 10px 14px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.gallery-tag { font-family: var(--mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); padding: 2px 8px; border: 1px solid var(--border-accent); border-radius: 4px; flex-shrink: 0; }
+
+/* ── Capabilities ── */
+.capabilities { padding: 120px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+.cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.cap-card { padding: 28px 24px; background: var(--bg-card); transition: background 0.3s; }
+.cap-card:hover { background: var(--bg-card-hover); }
+.cap-num { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 14px; opacity: 0.6; }
+.cap-card h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin-bottom: 10px; letter-spacing: -0.01em; }
+.cap-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
+
+/* ── Architecture ── */
+.architecture { padding: 120px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+.arch-columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 64px; }
+.arch-col { padding: 28px 24px; border-radius: var(--radius-lg); background: var(--bg-card); border: 1px solid var(--border); }
+.arch-col h3 { font-size: 15px; font-weight: 600; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; color: var(--text); }
+.arch-col h3 svg { color: var(--accent); opacity: 0.7; }
+.arch-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.arch-col li { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding-left: 14px; position: relative; font-weight: 300; }
+.arch-col li::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); }
+.arch-col code { padding: 2px 6px; background: var(--accent-glow); border-radius: 4px; font-size: 11px; font-family: var(--mono); color: var(--accent); }
+.proto { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; font-family: var(--mono); letter-spacing: 0.04em; text-transform: uppercase; margin-right: 4px; vertical-align: 1px; }
+.proto.bacnet { background: rgba(196, 122, 90, 0.15); color: var(--accent); }
+.proto.modbus { background: rgba(232, 168, 124, 0.12); color: #E8A87C; }
+.proto.mqtt { background: rgba(125, 184, 125, 0.12); color: #7DB87D; }
+.arch-stats { display: flex; justify-content: center; gap: 80px; padding: 40px 0; border-top: 1px solid var(--border); }
+.arch-stat { text-align: center; display: flex; flex-direction: column; gap: 4px; }
+.stat-val { font-family: var(--serif); font-size: 44px; font-weight: 400; letter-spacing: -0.03em; color: var(--text); }
+.stat-label { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── Coming Soon ── */
+.coming-soon { padding: 140px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+.cs-content { max-width: 540px; margin: 0 auto; text-align: center; }
+.cs-content h2 { margin-bottom: 20px; }
+.cs-content > p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 36px; font-weight: 300; }
+.cs-form { display: flex; gap: 8px; margin-bottom: 16px; }
+.cs-input { flex: 1; padding: 14px 20px; border-radius: 100px; border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-family: var(--sans); font-size: 14px; outline: none; transition: border-color 0.2s; }
+.cs-input:focus { border-color: var(--accent); }
+.cs-input:disabled { opacity: 0.5; }
+.cs-note { font-size: 12px; color: var(--text-muted); font-style: italic; }
+
+/* ── Footer ── */
+.footer { padding: 48px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: flex-start; }
+.footer-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 8px; }
+.footer-logo img { width: 22px; height: 22px; }
+.footer-left p { font-size: 13px; color: var(--text-muted); line-height: 1.5; font-weight: 300; }
+.footer-right { text-align: right; }
+.footer-right p { font-size: 13px; color: var(--text-muted); line-height: 1.5; font-weight: 300; font-style: italic; }
+.footer-copy { margin-top: 6px; font-size: 12px; opacity: 0.5; font-style: normal !important; }
+
+/* ── Animations ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.hero-eyebrow { animation: fadeUp 0.7s ease-out 0.1s both; }
+.hero h1 .hero-line-1 { animation: fadeUp 0.7s ease-out 0.2s both; }
+.hero h1 .hero-line-2 { animation: fadeUp 0.7s ease-out 0.3s both; }
+.hero h1 .hero-line-3 { animation: fadeUp 0.7s ease-out 0.4s both; }
+.hero h1 .hero-line-4 { animation: fadeUp 0.7s ease-out 0.5s both; }
+.hero-sub { animation: fadeUp 0.7s ease-out 0.6s both; }
+.hero-actions { animation: fadeUp 0.7s ease-out 0.7s both; }
+.hero-visual { animation: fadeUp 0.9s ease-out 0.9s both; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) { .cap-grid { grid-template-columns: repeat(2, 1fr); } .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) {
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-inner, .section-inner { padding: 0 24px; }
+  .hero { padding: 140px 24px 0; }
+  .hero h1 { font-size: 38px; }
+  .hero-eyebrow { flex-wrap: wrap; gap: 6px; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item.large { grid-column: 1; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .arch-columns { grid-template-columns: 1fr; }
+  .arch-stats { flex-wrap: wrap; gap: 32px; }
+  .cs-form { flex-direction: column; }
+  .footer-inner { flex-direction: column; gap: 24px; }
+  .footer-right { text-align: left; }
+  .marquee-strip { margin-top: 60px; }
+}
+@media (max-width: 480px) { .hero h1 { font-size: 32px; } .stat-val { font-size: 32px; } h2 { font-size: 32px; } }
+  </style>
+</head>
+<body>
+
+  <!-- Grid background -->
+  <div class="grid-bg" aria-hidden="true">
+    <svg width="100%" height="100%">
+      <defs>
+        <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+          <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(196,122,90,0.04)" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+    </svg>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="opencrate_icon.svg" alt="OpenCrate logo">
+        <span>OpenCrate</span>
+      </a>
+      <div class="nav-links">
+        <a href="#gallery">Gallery</a>
+        <a href="#capabilities">What It Does</a>
+        <a href="#architecture">Under the Hood</a>
+        <a href="#notify" class="nav-cta">Coming Soon</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="tag">Hobby Project</span>
+        <span class="tag-divider">/</span>
+        <span class="tag">Open Source</span>
+        <span class="tag-divider">/</span>
+        <span class="tag">Built in Rust</span>
+      </div>
+
+      <h1>
+        <span class="hero-line hero-line-1">An open-source</span>
+        <span class="hero-line hero-line-2">building management</span>
+        <span class="hero-line hero-line-3">system, built</span>
+        <span class="hero-line hero-line-4"><em>for fun.</em></span>
+      </h1>
+
+      <p class="hero-sub">
+        After working with a few different BAS platforms, I thought it'd be
+        fun to try building one from scratch. OpenCrate is that project &mdash;
+        BACnet, Modbus, alarms, schedules, trends, programming &mdash;
+        written in Rust, open source, free forever.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#notify" class="btn btn-primary">
+          <span>Coming Soon</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero screenshot -->
+    <div class="hero-visual">
+      <div class="hero-visual-frame">
+        <div class="hero-visual-bar">
+          <span class="bar-dot"></span>
+          <span class="bar-dot"></span>
+          <span class="bar-dot"></span>
+          <span class="bar-title">OpenCrate BMS</span>
+        </div>
+        <img src="ss-floorplan.png" alt="OpenCrate floor plan view with zone temperatures and equipment overlays" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee strip -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>BACnet/IP</span><span class="marquee-sep">&middot;</span>
+      <span>BACnet/SC</span><span class="marquee-sep">&middot;</span>
+      <span>MS/TP</span><span class="marquee-sep">&middot;</span>
+      <span>Modbus TCP</span><span class="marquee-sep">&middot;</span>
+      <span>Modbus RTU</span><span class="marquee-sep">&middot;</span>
+      <span>MQTT</span><span class="marquee-sep">&middot;</span>
+      <span>Alarms</span><span class="marquee-sep">&middot;</span>
+      <span>Schedules</span><span class="marquee-sep">&middot;</span>
+      <span>Trends</span><span class="marquee-sep">&middot;</span>
+      <span>Logic Engine</span><span class="marquee-sep">&middot;</span>
+      <span>Floor Plans</span><span class="marquee-sep">&middot;</span>
+      <span>Dashboards</span><span class="marquee-sep">&middot;</span>
+      <span>Commissioning</span><span class="marquee-sep">&middot;</span>
+      <span>REST API</span><span class="marquee-sep">&middot;</span>
+      <span>WebSocket</span><span class="marquee-sep">&middot;</span>
+      <span>BACnet/IP</span><span class="marquee-sep">&middot;</span>
+      <span>BACnet/SC</span><span class="marquee-sep">&middot;</span>
+      <span>MS/TP</span><span class="marquee-sep">&middot;</span>
+      <span>Modbus TCP</span><span class="marquee-sep">&middot;</span>
+      <span>Modbus RTU</span><span class="marquee-sep">&middot;</span>
+      <span>MQTT</span><span class="marquee-sep">&middot;</span>
+      <span>Alarms</span><span class="marquee-sep">&middot;</span>
+      <span>Schedules</span><span class="marquee-sep">&middot;</span>
+      <span>Trends</span><span class="marquee-sep">&middot;</span>
+      <span>Logic Engine</span><span class="marquee-sep">&middot;</span>
+      <span>Floor Plans</span><span class="marquee-sep">&middot;</span>
+      <span>Dashboards</span><span class="marquee-sep">&middot;</span>
+      <span>Commissioning</span><span class="marquee-sep">&middot;</span>
+      <span>REST API</span><span class="marquee-sep">&middot;</span>
+      <span>WebSocket</span><span class="marquee-sep">&middot;</span>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <section class="gallery" id="gallery">
+    <div class="section-inner">
+      <div class="section-label">Gallery</div>
+      <h2>Screenshots from<br><em>the real thing.</em></h2>
+
+      <div class="gallery-grid">
+        <div class="gallery-item large">
+          <img src="ss-programming.png" alt="Visual block programming editor" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Logic</span>
+            Drag-and-drop block programming, compiled to scripts under the hood
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="ss-sitemap.png" alt="Site map with Mapbox" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Maps</span>
+            Building locations on a real map
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="ss-devices.png" alt="Device browser" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Devices</span>
+            Live BACnet + Modbus point browser
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="ss-dashboard.png" alt="Custom dashboards" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Dashboards</span>
+            Build your own with charts + gauges
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="ss-floorplan2.png" alt="Floor plan zones" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Plans</span>
+            Draw zones, see live temps
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="ss-discovery2.png" alt="Device discovery" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Discovery</span>
+            Scan the network, accept devices
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="ss-weather.png" alt="Weather integration" loading="lazy">
+          <div class="gallery-meta">
+            <span class="gallery-tag">Weather</span>
+            5 weather sources, one view
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities -->
+  <section class="capabilities" id="capabilities">
+    <div class="section-inner">
+      <div class="section-label">What it does</div>
+      <h2>Turns out a BAS needs<br><em>a lot of features.</em></h2>
+
+      <div class="cap-grid">
+        <div class="cap-card">
+          <div class="cap-num">01</div>
+          <h3>Multi-Protocol</h3>
+          <p>BACnet/IP, BACnet/SC, MS/TP, Modbus TCP/RTU. Auto-discovery, COV subscriptions, priority writes, block reads.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">02</div>
+          <h3>Alarms & Routing</h3>
+          <p>High/low limit, deadband, intrinsic alarms. Route notifications to email, SMS, or webhooks. Shelving for maintenance windows. Escalation tiers.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">03</div>
+          <h3>Scheduling</h3>
+          <p>Weekly schedules with exception overrides. Syncs to and from BACnet Schedule objects on controllers. Calendar support for holidays.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">04</div>
+          <h3>Trend Logging</h3>
+          <p>Interval and COV history collection with auto-downsampling across four storage tiers. Backfill from BACnet TrendLogs. Export to CSV.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">05</div>
+          <h3>Logic Engine</h3>
+          <p>A visual block editor that compiles to scripts. PID loops, timers, math blocks, comparisons. Wire them together and hit run.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">06</div>
+          <h3>Commissioning</h3>
+          <p>Auto-generates a checklist for every device. Verify reads, writes, alarms, and schedules point by point. Sign off when you're done. Full audit trail.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">07</div>
+          <h3>MQTT & Reporting</h3>
+          <p>Publish live data to MQTT brokers for Grafana, InfluxDB, or Home Assistant. Scheduled HTML reports for energy, alarms, comfort, and runtime.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-num">08</div>
+          <h3>Auth & Audit</h3>
+          <p>User accounts with admin, operator, and viewer roles. Every write, acknowledgment, and config change gets logged.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section class="architecture" id="architecture">
+    <div class="section-inner">
+      <div class="section-label">Under the hood</div>
+      <h2>One Rust binary.<br><em>That's the whole thing.</em></h2>
+
+      <div class="arch-columns">
+        <div class="arch-col">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Protocols
+          </h3>
+          <ul>
+            <li><span class="proto bacnet">BACnet</span> IP, SC, MS/TP, BBMD</li>
+            <li><span class="proto modbus">Modbus</span> TCP + RTU with block reads</li>
+            <li><span class="proto mqtt">MQTT</span> Publish values, alarms, status</li>
+            <li>Extensible <code>ProtocolDriver</code> trait for adding more</li>
+          </ul>
+        </div>
+        <div class="arch-col">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            Data
+          </h3>
+          <ul>
+            <li>Site / Space / Equip / Point hierarchy</li>
+            <li>Event bus &mdash; no polling, everything reacts</li>
+            <li>SQLite everywhere &mdash; WAL mode, zero config</li>
+            <li>Protocol-agnostic device discovery</li>
+          </ul>
+        </div>
+        <div class="arch-col">
+          <h3>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Automation
+          </h3>
+          <ul>
+            <li>Alarm engine &mdash; threshold + intrinsic</li>
+            <li>Schedule engine &mdash; weekly + exceptions</li>
+            <li>Logic engine &mdash; visual blocks to Rhai</li>
+            <li>History engine &mdash; 4-tier auto storage</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arch-stats">
+        <div class="arch-stat">
+          <span class="stat-val">327+</span>
+          <span class="stat-label">tests</span>
+        </div>
+        <div class="arch-stat">
+          <span class="stat-val">1</span>
+          <span class="stat-label">binary</span>
+        </div>
+        <div class="arch-stat">
+          <span class="stat-val">$0</span>
+          <span class="stat-label">forever</span>
+        </div>
+        <div class="arch-stat">
+          <span class="stat-val">&lt;50MB</span>
+          <span class="stat-label">memory</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coming Soon -->
+  <section class="coming-soon" id="notify">
+    <div class="section-inner">
+      <div class="cs-content">
+        <div class="section-label">Status</div>
+        <h2>Coming soon.</h2>
+        <p>
+          OpenCrate is a hobby project &mdash; something I work on because I find
+          building automation genuinely interesting. It's getting close to a first public
+          release. If you'd like to know when it's available, leave your email below.
+        </p>
+        <div class="cs-form">
+          <input type="email" placeholder="your@email.com" class="cs-input" disabled>
+          <button class="btn btn-primary" disabled>
+            <span>Notify Me</span>
+          </button>
+        </div>
+        <p class="cs-note">No spam. One email when it ships.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-logo">
+          <img src="opencrate_icon.svg" alt="OpenCrate logo">
+          OpenCrate
+        </span>
+        <p>Open-source building management.<br>A hobby project, built with Rust.</p>
+      </div>
+      <div class="footer-right">
+        <p>Built because building automation<br>is more interesting than it gets credit for.</p>
+        <p class="footer-copy">MIT License</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
