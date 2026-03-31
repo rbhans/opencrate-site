@@ -1,0 +1,67 @@
+site_name: OpenCrate BMS Docs
+site_url: https://rbhans.github.io/opencrate-site/docs/
+docs_dir: docs-src
+site_dir: docs
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: deep orange
+    accent: deep orange
+  font:
+    text: Outfit
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.instant
+    - navigation.instant.progress
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+repo_url: https://github.com/rbhans/opencrate-bms
+repo_name: rbhans/opencrate-bms
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Quick Start: getting-started/index.md
+  - Architecture:
+    - Overview: architecture/index.md
+    - Platform: architecture/platform-overview.md
+    - API & Realtime: architecture/api-and-realtime.md
+    - Data & Persistence: architecture/data-and-persistence.md
+  - Features:
+    - Overview: features/index.md
+    - Operations: features/operations.md
+    - Automation & Analysis: features/automation-and-analysis.md
+  - Deployment:
+    - Deployment: deployment/index.md
+  - Integrations:
+    - Overview: integrations/index.md
+    - Field Protocols: integrations/field-protocols.md
+    - Outbound Connectors: integrations/outbound-connectors.md
+  - Developer:
+    - Developer Guide: developer/index.md
+    - Adding a Feature: developer/adding-a-feature.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+  - tables
+
+extra_css:
+  - stylesheets/extra.css
