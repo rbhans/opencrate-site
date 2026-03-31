@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#core-features" class="md-skip">
+        <a href="#features" class="md-skip">
           Skip to content
         </a>
       
@@ -648,10 +648,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#operations" class="md-nav__link">
+  <a href="#day-to-day-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Operations
+        Day-to-day operations
       
     </span>
   </a>
@@ -659,10 +659,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#automation-and-analysis" class="md-nav__link">
+  <a href="#automation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Automation and analysis
+        Automation
       
     </span>
   </a>
@@ -670,10 +670,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integrations-and-delivery" class="md-nav__link">
+  <a href="#analysis-and-reporting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Integrations and delivery
+        Analysis and reporting
       
     </span>
   </a>
@@ -681,10 +681,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#user-model" class="md-nav__link">
+  <a href="#integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        User model
+        Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Administration
       
     </span>
   </a>
@@ -1152,10 +1163,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#operations" class="md-nav__link">
+  <a href="#day-to-day-operations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Operations
+        Day-to-day operations
       
     </span>
   </a>
@@ -1163,10 +1174,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#automation-and-analysis" class="md-nav__link">
+  <a href="#automation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Automation and analysis
+        Automation
       
     </span>
   </a>
@@ -1174,10 +1185,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integrations-and-delivery" class="md-nav__link">
+  <a href="#analysis-and-reporting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Integrations and delivery
+        Analysis and reporting
       
     </span>
   </a>
@@ -1185,10 +1196,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#user-model" class="md-nav__link">
+  <a href="#integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        User model
+        Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Administration
       
     </span>
   </a>
@@ -1215,38 +1237,48 @@
   
 
 
-<h1 id="core-features">Core Features<a class="headerlink" href="#core-features" title="Permanent link">&para;</a></h1>
-<p>OpenCrate has grown into a feature-rich BMS platform. The easiest way to understand it is by grouping capabilities into operator workflows.</p>
+<h1 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h1>
+<p>OpenCrate is a full-featured Building Management System. This page maps every capability to the workflow it supports. Detailed coverage lives in the linked pages.</p>
 <h2 id="device-onboarding">Device onboarding<a class="headerlink" href="#device-onboarding" title="Permanent link">&para;</a></h2>
+<p>Getting field devices into the system and verifying they work correctly.</p>
 <ul>
-<li>protocol bridges and discovery flows find devices and points</li>
-<li>commissioning tools track verification and sign-off work</li>
-<li>templates and profiles help standardize accepted devices</li>
+<li><strong>Discovery</strong> -- Protocol-agnostic scanning for BACnet and Modbus devices. Devices move through Discovered, Accepted, and Ignored states. Scans are always user-initiated and re-discovery preserves prior state. Auto-naming heuristics and equipment grouping suggestions speed up large sites. <a href="operations/#discovery">Details</a></li>
+<li><strong>Commissioning</strong> -- Per-device sessions with per-point checklists (ReadVerify, WriteVerify, AlarmVerify, ScheduleVerify). Sessions progress from not_started through in_progress and completed to signed_off. <a href="operations/#commissioning">Details</a></li>
 </ul>
-<h2 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">&para;</a></h2>
+<h2 id="day-to-day-operations">Day-to-day operations<a class="headerlink" href="#day-to-day-operations" title="Permanent link">&para;</a></h2>
+<p>Monitoring, responding to events, and controlling equipment.</p>
 <ul>
-<li>alarms support active views, history, acknowledgements, shelving, and routing</li>
-<li>schedules support weekly and exception behavior with BACnet schedule sync</li>
-<li>history collection supports interval and change-based trending</li>
-<li>floor plans and site maps provide spatial context for equipment and points</li>
+<li><strong>Alarms</strong> -- Full lifecycle management: raised, cleared, acknowledged. Shelving with automatic expiry. EventBus-driven flag sync with periodic stale checks. Active and history views with export. <a href="operations/#alarms">Details</a></li>
+<li><strong>Schedules</strong> -- Weekly and exception schedules with point assignments. BACnet schedule synchronization reads and writes schedules, calendars, and exceptions directly from field devices. <a href="operations/#schedules">Details</a></li>
+<li><strong>History</strong> -- Time-series sample collection in interval and COV modes. Query by time range and export to CSV. <a href="operations/#history">Details</a></li>
 </ul>
-<h2 id="automation-and-analysis">Automation and analysis<a class="headerlink" href="#automation-and-analysis" title="Permanent link">&para;</a></h2>
+<h2 id="automation">Automation<a class="headerlink" href="#automation" title="Permanent link">&para;</a></h2>
+<p>Custom control logic and fault detection running continuously in the background.</p>
 <ul>
-<li>a visual logic system compiles into executable logic</li>
-<li>reporting turns runtime data into scheduled reports and exports</li>
-<li>energy features track meters, rates, baselines, and rollups</li>
-<li>FDD rules detect common system issues and maintain fault history</li>
+<li><strong>Logic Engine</strong> -- Visual block programming with 19+ block types compiled to sandboxed Rhai scripts. Runs on a 1-second tick, on value change, or on a custom period. <a href="automation-and-analysis/#logic-engine">Details</a></li>
+<li><strong>FDD (Fault Detection &amp; Diagnostics)</strong> -- Rule-based fault detection with threshold, stuck value, short-cycling, schedule deviation, and demand-sensitive conditions. EventBus subscriber with 30-second periodic evaluation. <a href="automation-and-analysis/#fault-detection--diagnostics">Details</a></li>
 </ul>
-<h2 id="integrations-and-delivery">Integrations and delivery<a class="headerlink" href="#integrations-and-delivery" title="Permanent link">&para;</a></h2>
+<h2 id="analysis-and-reporting">Analysis and reporting<a class="headerlink" href="#analysis-and-reporting" title="Permanent link">&para;</a></h2>
+<p>Turning operational data into insight.</p>
 <ul>
-<li>MQTT publishing distributes event and value updates</li>
-<li>webhook providers deliver external notifications and integrations</li>
-<li>email, SMS, and webhook channels support routed alarm delivery</li>
+<li><strong>Reporting</strong> -- 7 section types, 4 built-in templates, scheduled SMTP delivery. Queries across history, alarms, points, and nodes. Inline-CSS HTML output that works in any email client. <a href="automation-and-analysis/#reporting">Details</a></li>
+<li><strong>Energy Analytics</strong> -- Consumption calculation, demand profiling, degree-day analysis, cost modeling, and automated daily/monthly rollups. Background scheduler runs every 15 minutes. <a href="automation-and-analysis/#energy-analytics">Details</a></li>
 </ul>
-<h2 id="user-model">User model<a class="headerlink" href="#user-model" title="Permanent link">&para;</a></h2>
+<h2 id="integration">Integration<a class="headerlink" href="#integration" title="Permanent link">&para;</a></h2>
+<p>Connecting OpenCrate to external systems.</p>
 <ul>
-<li>authentication and role-based permissions gate administrative actions</li>
-<li>audit logging records operator actions across major workflows</li>
+<li><strong>Webhooks</strong> -- Outbound HTTP notifications for alarm and device events. Provider-specific formatters for Slack, Teams, PagerDuty, and ntfy. HMAC-SHA256 signing, retry logic, and per-endpoint event toggles. <a href="operations/#alarm-routing--notifications">Details</a></li>
+<li><strong>MQTT</strong> -- Publishes point values, alarms, and device status to one or more MQTT brokers. Configurable topic templates with hot-reload. <a href="operations/#alarm-routing--notifications">Details</a></li>
+<li><strong>Notification routing</strong> -- Alarm-driven dispatch to webhooks, email (SMTP), and SMS (Twilio). Rule-based filtering by severity, device, and alarm type with tiered escalation and retry. <a href="operations/#alarm-routing--notifications">Details</a></li>
+<li><strong>Export</strong> -- Continuous or backfill export to InfluxDB and PostgreSQL. Per-connector event toggles and status tracking. <a href="automation-and-analysis/#export">Details</a></li>
+</ul>
+<h2 id="administration">Administration<a class="headerlink" href="#administration" title="Permanent link">&para;</a></h2>
+<p>Security, audit, and system maintenance.</p>
+<ul>
+<li><strong>Auth</strong> -- Argon2 password hashing, JWT tokens. Three roles (Admin, Operator, Viewer) with 16 granular permissions. First-run setup flow. <a href="operations/#auth--audit">Details</a></li>
+<li><strong>Audit</strong> -- Every operator action logged with timestamp, user, action, and details. <a href="operations/#auth--audit">Details</a></li>
+<li><strong>Weather</strong> -- Pluggable weather providers (OpenWeatherMap, custom HTTP). Forecast models with auto-geocoding. <a href="operations/#weather">Details</a></li>
+<li><strong>Backup</strong> -- Scheduled backups with configurable interval and retention. API-triggered or automatic. <a href="operations/#backup">Details</a></li>
 </ul>
 
 

@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#api-and-realtime" class="md-skip">
+        <a href="#api-and-real-time-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -520,10 +520,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#http-surface" class="md-nav__link">
+  <a href="#api-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        HTTP surface
+        API State
       
     </span>
   </a>
@@ -531,32 +531,347 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#realtime-updates" class="md-nav__link">
+  <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Realtime updates
+        Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#auth-model" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#authorization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Auth model
+        Authorization
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#why-the-split-matters" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why the split matters
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Headers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CORS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#body-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Body Limit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Route Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#points-apipoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Points -- /api/points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodes-apinodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nodes -- /api/nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alarms-apialarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alarms -- /api/alarms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history-apihistory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History -- /api/history
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules-apischedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedules -- /api/schedules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-apidiscovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery -- /api/discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programs-apiprograms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Programs -- /api/programs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reports-apireports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reports -- /api/reports
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#energy-apienergy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy -- /api/energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhooks-apiwebhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webhooks -- /api/webhooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fdd-fault-detection-apifdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FDD (Fault Detection) -- /api/fdd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#export-apiexport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export -- /api/export
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overrides-apioverrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overrides -- /api/overrides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#users-apiusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users -- /api/users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-apiaudit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit -- /api/audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-apisystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System -- /api/system
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#websocket-ws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WebSocket -- /ws
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WebSocket -- /ws">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscription-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subscription Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Responses
       
     </span>
   </a>
@@ -1130,10 +1445,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#http-surface" class="md-nav__link">
+  <a href="#api-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        HTTP surface
+        API State
       
     </span>
   </a>
@@ -1141,32 +1456,347 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#realtime-updates" class="md-nav__link">
+  <a href="#security" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Realtime updates
+        Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#auth-model" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#authorization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Auth model
+        Authorization
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#why-the-split-matters" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why the split matters
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Headers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CORS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#body-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Body Limit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Route Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#points-apipoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Points -- /api/points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodes-apinodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nodes -- /api/nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alarms-apialarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alarms -- /api/alarms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history-apihistory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History -- /api/history
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schedules-apischedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedules -- /api/schedules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-apidiscovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery -- /api/discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programs-apiprograms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Programs -- /api/programs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reports-apireports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reports -- /api/reports
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#energy-apienergy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy -- /api/energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhooks-apiwebhooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webhooks -- /api/webhooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fdd-fault-detection-apifdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FDD (Fault Detection) -- /api/fdd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#export-apiexport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export -- /api/export
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overrides-apioverrides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overrides -- /api/overrides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#users-apiusers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users -- /api/users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-apiaudit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit -- /api/audit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-apisystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System -- /api/system
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#websocket-ws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WebSocket -- /ws
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WebSocket -- /ws">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscription-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subscription Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Responses
       
     </span>
   </a>
@@ -1193,30 +1823,918 @@
   
 
 
-<h1 id="api-and-realtime">API and Realtime<a class="headerlink" href="#api-and-realtime" title="Permanent link">&para;</a></h1>
-<h2 id="http-surface">HTTP surface<a class="headerlink" href="#http-surface" title="Permanent link">&para;</a></h2>
-<p>When the <code>api</code> feature is enabled, OpenCrate exposes an Axum-based API rooted at <code>/api/</code>.</p>
-<p>The current API surface includes endpoints for:</p>
+<h1 id="api-and-real-time-reference">API and Real-Time Reference<a class="headerlink" href="#api-and-real-time-reference" title="Permanent link">&para;</a></h1>
+<p>OpenCrate exposes an Axum-based REST API (feature-gated with <code>api</code>) and a WebSocket endpoint for live updates. This document covers every route module, the security model, and the real-time protocol.</p>
+<h2 id="api-state">API State<a class="headerlink" href="#api-state" title="Permanent link">&para;</a></h2>
+<p>The API server is built from the Platform. <code>ApiState</code> is an Axum extension containing 25 fields:</p>
 <ul>
-<li>auth and first-run setup</li>
-<li>points, alarms, and discovery data</li>
-<li>reporting and exports</li>
-<li>energy and FDD features</li>
-<li>webhook and notification configuration</li>
+<li>All 14 AutomationState stores</li>
+<li>PointStore, NodeStore, EventBus</li>
+<li>HealthRegistry</li>
+<li>UserStore, AuditStore, OverrideStore</li>
+<li>JWT secret</li>
+<li>BackupScheduler</li>
+<li>Rate limiters (per-IP and global)</li>
+<li>BridgeRegistry</li>
 </ul>
-<h2 id="realtime-updates">Realtime updates<a class="headerlink" href="#realtime-updates" title="Permanent link">&para;</a></h2>
-<p>The WebSocket endpoint provides live updates for operator-facing screens and automation clients that need state changes without polling.</p>
-<p>Internally, that realtime layer is fed by the same platform and event-bus updates used by other background services.</p>
-<h2 id="auth-model">Auth model<a class="headerlink" href="#auth-model" title="Permanent link">&para;</a></h2>
-<p>Authentication is handled in the application layer and guarded by role-based permissions. API routes are grouped by domain and permission requirements under <code>src/api/routes/</code>.</p>
-<h2 id="why-the-split-matters">Why the split matters<a class="headerlink" href="#why-the-split-matters" title="Permanent link">&para;</a></h2>
-<p>The API layer is deliberately thin:</p>
+<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
+<p>All endpoints except <code>POST /api/auth/login</code> require a valid JWT in the <code>Authorization: Bearer &lt;token&gt;</code> header.</p>
+<p><strong>Login flow:</strong></p>
+<ol>
+<li><code>POST /api/auth/login</code> with <code>{ "username": "...", "password": "..." }</code></li>
+<li>Server returns <code>{ "token": "...", "expires_at": "..." }</code></li>
+<li>Client includes token in all subsequent requests</li>
+</ol>
+<p>Tokens carry the user's role and permissions. Expired tokens return <code>401 Unauthorized</code>.</p>
+<h3 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h3>
+<p>Role-based access control with permissions attached to each role. Endpoints check specific permissions:</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Allowed Roles</th>
+<th>Used By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ManageNotifications</code></td>
+<td>Admin</td>
+<td>Notification routing config</td>
+</tr>
+<tr>
+<td><code>ManageWebhooks</code></td>
+<td>Admin</td>
+<td>Webhook endpoint CRUD</td>
+</tr>
+<tr>
+<td><code>ManageMqtt</code></td>
+<td>Admin</td>
+<td>MQTT broker config</td>
+</tr>
+<tr>
+<td><code>ManageReports</code></td>
+<td>Admin, Operator</td>
+<td>Report definitions and schedules</td>
+</tr>
+<tr>
+<td><code>ManageEnergy</code></td>
+<td>Admin, Operator</td>
+<td>Energy meters and rates</td>
+</tr>
+<tr>
+<td><code>ManageCommissioning</code></td>
+<td>Admin, Operator</td>
+<td>Commissioning sessions</td>
+</tr>
+<tr>
+<td><code>ShelveAlarm</code></td>
+<td>Admin, Operator</td>
+<td>Alarm shelving</td>
+</tr>
+<tr>
+<td><code>WritePoints</code></td>
+<td>Admin, Operator</td>
+<td>Point value writes</td>
+</tr>
+<tr>
+<td><code>AcknowledgeAlarms</code></td>
+<td>Admin, Operator</td>
+<td>Alarm acknowledgment</td>
+</tr>
+<tr>
+<td><code>ManagePrograms</code></td>
+<td>Admin</td>
+<td>Logic program CRUD</td>
+</tr>
+<tr>
+<td><code>ManageSchedules</code></td>
+<td>Admin, Operator</td>
+<td>Schedule CRUD</td>
+</tr>
+<tr>
+<td><code>ManageUsers</code></td>
+<td>Admin</td>
+<td>User CRUD</td>
+</tr>
+<tr>
+<td><code>ManageDiscovery</code></td>
+<td>Admin</td>
+<td>Device discovery and acceptance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
+<p>Two layers:</p>
 <ul>
-<li>route handlers parse requests and validate access</li>
-<li>stores and domain modules perform the actual work</li>
-<li>shared state keeps UI and API behavior aligned</li>
+<li><strong>Per-IP rate limiter</strong> -- prevents individual clients from overwhelming the server</li>
+<li><strong>Global rate limiter</strong> -- protects total server capacity</li>
 </ul>
-<p>That makes it easier to add new routes without re-implementing business logic.</p>
+<p>Rate-limited requests receive <code>429 Too Many Requests</code> with a <code>Retry-After</code> header.</p>
+<h3 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h3>
+<p>Every response includes:</p>
+<ul>
+<li><code>X-Content-Type-Options: nosniff</code></li>
+<li><code>X-Frame-Options: DENY</code></li>
+<li><code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code> (HSTS)</li>
+<li><code>Referrer-Policy: strict-origin-when-cross-origin</code></li>
+</ul>
+<h3 id="cors">CORS<a class="headerlink" href="#cors" title="Permanent link">&para;</a></h3>
+<p>Configurable CORS policy. In development, allows <code>localhost</code> origins. In production, must be explicitly configured.</p>
+<h3 id="body-limit">Body Limit<a class="headerlink" href="#body-limit" title="Permanent link">&para;</a></h3>
+<p>All requests are capped at <strong>1 MB</strong> to prevent abuse.</p>
+<hr />
+<h2 id="route-modules">Route Modules<a class="headerlink" href="#route-modules" title="Permanent link">&para;</a></h2>
+<h3 id="points-apipoints">Points -- <code>/api/points</code><a class="headerlink" href="#points-apipoints" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/points</code></td>
+<td>List all points with current values</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/points/:id</code></td>
+<td>Get a single point's value and status</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/points/:id/write</code></td>
+<td>Write a value to a point (routes through BridgeRegistry to field device)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nodes-apinodes">Nodes -- <code>/api/nodes</code><a class="headerlink" href="#nodes-apinodes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/nodes</code></td>
+<td>List all nodes (filterable by type, tag, parent)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/nodes/:id</code></td>
+<td>Get a single node with full detail (tags, refs, properties, capabilities)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/nodes</code></td>
+<td>Create a node</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/nodes/:id</code></td>
+<td>Update a node</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/nodes/:id</code></td>
+<td>Delete a node</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/nodes/:id/children</code></td>
+<td>Get direct children of a node</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/nodes/:id/hierarchy</code></td>
+<td>Get full subtree (recursive)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/nodes/by-tag/:tag</code></td>
+<td>Find nodes by tag</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alarms-apialarms">Alarms -- <code>/api/alarms</code><a class="headerlink" href="#alarms-apialarms" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/alarms</code></td>
+<td>List alarms (filterable by status, severity, device)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/alarms/:id</code></td>
+<td>Get alarm detail</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/alarms/:id/acknowledge</code></td>
+<td>Acknowledge an alarm (sends BACnet ack for BACnet devices)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/alarms/:id/shelve</code></td>
+<td>Shelve an alarm (with expiration)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/alarms/:id/unshelve</code></td>
+<td>Remove shelving</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/alarms/summary</code></td>
+<td>Alarm counts by severity and status</td>
+</tr>
+</tbody>
+</table>
+<h3 id="history-apihistory">History -- <code>/api/history</code><a class="headerlink" href="#history-apihistory" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/history/:point_id</code></td>
+<td>Get trend data for a point (query params: start, end, interval)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/history/:point_id/rollup</code></td>
+<td>Get aggregated data (min, max, avg, sum over intervals)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schedules-apischedules">Schedules -- <code>/api/schedules</code><a class="headerlink" href="#schedules-apischedules" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/schedules</code></td>
+<td>List all schedules</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/schedules/:id</code></td>
+<td>Get schedule detail</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/schedules</code></td>
+<td>Create a schedule</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/schedules/:id</code></td>
+<td>Update a schedule</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/schedules/:id</code></td>
+<td>Delete a schedule</td>
+</tr>
+</tbody>
+</table>
+<h3 id="discovery-apidiscovery">Discovery -- <code>/api/discovery</code><a class="headerlink" href="#discovery-apidiscovery" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/discovery/scan</code></td>
+<td>Initiate a discovery scan (BACnet Who-Is, Modbus ID scan)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/discovery/devices</code></td>
+<td>List discovered devices</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/discovery/devices/:id</code></td>
+<td>Get device detail with discovered points</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/discovery/devices/:id/accept</code></td>
+<td>Accept a discovered device (creates nodes)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/discovery/devices/:id/ignore</code></td>
+<td>Ignore a discovered device</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/discovery/status</code></td>
+<td>Current scan status</td>
+</tr>
+</tbody>
+</table>
+<h3 id="programs-apiprograms">Programs -- <code>/api/programs</code><a class="headerlink" href="#programs-apiprograms" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/programs</code></td>
+<td>List all logic programs</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/programs/:id</code></td>
+<td>Get program detail (block graph + compiled Rhai)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/programs</code></td>
+<td>Create a program</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/programs/:id</code></td>
+<td>Update a program</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/programs/:id</code></td>
+<td>Delete a program</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/programs/:id/execute</code></td>
+<td>Manually trigger program execution</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/programs/:id/log</code></td>
+<td>Get execution log (last 100 entries)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reports-apireports">Reports -- <code>/api/reports</code><a class="headerlink" href="#reports-apireports" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/reports</code></td>
+<td>List report definitions</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/reports/:id</code></td>
+<td>Get report definition</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/reports</code></td>
+<td>Create a report definition</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/reports/:id</code></td>
+<td>Update a report definition</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/reports/:id</code></td>
+<td>Delete a report definition</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/reports/:id/run</code></td>
+<td>Run a report now</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/reports/:id/preview</code></td>
+<td>Preview rendered HTML</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/reports/templates</code></td>
+<td>List available report templates</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/reports/schedules</code></td>
+<td>List report schedules</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/reports/schedules</code></td>
+<td>Create a report schedule</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/reports/schedules/:id</code></td>
+<td>Update a report schedule</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/reports/schedules/:id</code></td>
+<td>Delete a report schedule</td>
+</tr>
+</tbody>
+</table>
+<h3 id="energy-apienergy">Energy -- <code>/api/energy</code><a class="headerlink" href="#energy-apienergy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/energy/meters</code></td>
+<td>List energy meters</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/energy/meters</code></td>
+<td>Create an energy meter</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/energy/meters/:id</code></td>
+<td>Update an energy meter</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/energy/meters/:id</code></td>
+<td>Delete an energy meter</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/energy/rates</code></td>
+<td>List utility rate structures</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/energy/rates</code></td>
+<td>Create a rate structure</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/energy/rates/:id</code></td>
+<td>Update a rate structure</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/energy/rates/:id</code></td>
+<td>Delete a rate structure</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/energy/summary</code></td>
+<td>Energy dashboard summary (consumption, demand, cost)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/energy/consumption</code></td>
+<td>Consumption data (filterable by meter, date range)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/energy/export</code></td>
+<td>Export energy data as CSV</td>
+</tr>
+</tbody>
+</table>
+<h3 id="webhooks-apiwebhooks">Webhooks -- <code>/api/webhooks</code><a class="headerlink" href="#webhooks-apiwebhooks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/webhooks</code></td>
+<td>List webhook endpoints</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/webhooks</code></td>
+<td>Create a webhook endpoint</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/webhooks/:id</code></td>
+<td>Update a webhook endpoint</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/webhooks/:id</code></td>
+<td>Delete a webhook endpoint</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/webhooks/:id/test</code></td>
+<td>Send a test delivery</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/webhooks/:id/deliveries</code></td>
+<td>List delivery log for an endpoint</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/webhooks/deliveries</code></td>
+<td>List all deliveries (filterable by status)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/webhooks/config</code></td>
+<td>Get global webhook config (pause state)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fdd-fault-detection-apifdd">FDD (Fault Detection) -- <code>/api/fdd</code><a class="headerlink" href="#fdd-fault-detection-apifdd" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/fdd/rules</code></td>
+<td>List fault detection rules</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/fdd/rules</code></td>
+<td>Create a rule</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/fdd/rules/:id</code></td>
+<td>Update a rule</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/fdd/rules/:id</code></td>
+<td>Delete a rule</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/fdd/faults</code></td>
+<td>List active and historical faults</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/fdd/faults/:id</code></td>
+<td>Get fault detail</td>
+</tr>
+</tbody>
+</table>
+<h3 id="export-apiexport">Export -- <code>/api/export</code><a class="headerlink" href="#export-apiexport" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/export/targets</code></td>
+<td>List export targets (InfluxDB, Postgres)</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/export/targets</code></td>
+<td>Create an export target</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/export/targets/:id</code></td>
+<td>Update an export target</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/export/targets/:id</code></td>
+<td>Delete an export target</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/export/targets/:id/test</code></td>
+<td>Test connectivity to an export target</td>
+</tr>
+</tbody>
+</table>
+<h3 id="overrides-apioverrides">Overrides -- <code>/api/overrides</code><a class="headerlink" href="#overrides-apioverrides" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/overrides</code></td>
+<td>List active overrides</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/overrides</code></td>
+<td>Create an override (with optional expiry)</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/overrides/:id</code></td>
+<td>Remove an override</td>
+</tr>
+</tbody>
+</table>
+<h3 id="users-apiusers">Users -- <code>/api/users</code><a class="headerlink" href="#users-apiusers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/users</code></td>
+<td>List users</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/users</code></td>
+<td>Create a user</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td><code>/api/users/:id</code></td>
+<td>Update a user</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/users/:id</code></td>
+<td>Delete a user</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/auth/login</code></td>
+<td>Authenticate and receive JWT</td>
+</tr>
+</tbody>
+</table>
+<h3 id="audit-apiaudit">Audit -- <code>/api/audit</code><a class="headerlink" href="#audit-apiaudit" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/audit</code></td>
+<td>Query audit log (filterable by user, action, date range)</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/audit/actions</code></td>
+<td>List all audit action types</td>
+</tr>
+</tbody>
+</table>
+<h3 id="system-apisystem">System -- <code>/api/system</code><a class="headerlink" href="#system-apisystem" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/system/health</code></td>
+<td>Per-component health status</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/system/info</code></td>
+<td>Version, uptime, build info</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/system/backup</code></td>
+<td>Trigger a database backup</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/system/backup/status</code></td>
+<td>Backup scheduler status</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="websocket-ws">WebSocket -- <code>/ws</code><a class="headerlink" href="#websocket-ws" title="Permanent link">&para;</a></h2>
+<p>The WebSocket endpoint provides real-time push updates to connected clients (the GUI and any external integrations).</p>
+<h3 id="connection">Connection<a class="headerlink" href="#connection" title="Permanent link">&para;</a></h3>
+<p>Connect to <code>ws://&lt;host&gt;:&lt;port&gt;/ws</code> with a valid JWT as a query parameter or in the initial HTTP upgrade headers.</p>
+<h3 id="message-format">Message Format<a class="headerlink" href="#message-format" title="Permanent link">&para;</a></h3>
+<p>All messages are JSON:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;value_changed&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">&quot;node_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1001/analog-input-1&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">72.5</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-03-31T14:30:00Z&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="event-types">Event Types<a class="headerlink" href="#event-types" title="Permanent link">&para;</a></h3>
+<p>The WebSocket forwards a subset of EventBus events to connected clients:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>value_changed</code></td>
+<td>A point value was updated</td>
+</tr>
+<tr>
+<td><code>status_changed</code></td>
+<td>A point's status flags changed</td>
+</tr>
+<tr>
+<td><code>alarm_raised</code></td>
+<td>A new alarm was raised</td>
+</tr>
+<tr>
+<td><code>alarm_cleared</code></td>
+<td>An alarm returned to normal</td>
+</tr>
+<tr>
+<td><code>alarm_acknowledged</code></td>
+<td>An alarm was acknowledged</td>
+</tr>
+<tr>
+<td><code>device_discovered</code></td>
+<td>A new device was found during discovery</td>
+</tr>
+<tr>
+<td><code>device_down</code></td>
+<td>A device stopped responding</td>
+</tr>
+<tr>
+<td><code>device_recovered</code></td>
+<td>A previously down device came back online</td>
+</tr>
+<tr>
+<td><code>fdd_fault_raised</code></td>
+<td>A fault detection rule triggered</td>
+</tr>
+<tr>
+<td><code>fdd_fault_cleared</code></td>
+<td>A fault detection rule returned to normal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="subscription-filtering">Subscription Filtering<a class="headerlink" href="#subscription-filtering" title="Permanent link">&para;</a></h3>
+<p>Clients can send subscription messages to filter which events they receive:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;subscribe&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;node_ids&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;1001/analog-input-1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;1001/analog-input-2&quot;</span><span class="p">],</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;event_types&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;value_changed&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;alarm_raised&quot;</span><span class="p">]</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>Without a subscription filter, all events are forwarded.</p>
+<hr />
+<h2 id="error-responses">Error Responses<a class="headerlink" href="#error-responses" title="Permanent link">&para;</a></h2>
+<p>All error responses follow a consistent format:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_found&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Node with ID &#39;999&#39; not found&quot;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>Standard HTTP status codes:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>400</code></td>
+<td>Bad request (invalid JSON, missing fields)</td>
+</tr>
+<tr>
+<td><code>401</code></td>
+<td>Unauthorized (missing or expired JWT)</td>
+</tr>
+<tr>
+<td><code>403</code></td>
+<td>Forbidden (insufficient permissions)</td>
+</tr>
+<tr>
+<td><code>404</code></td>
+<td>Not found</td>
+</tr>
+<tr>
+<td><code>409</code></td>
+<td>Conflict (duplicate ID, concurrent modification)</td>
+</tr>
+<tr>
+<td><code>422</code></td>
+<td>Unprocessable entity (validation failure)</td>
+</tr>
+<tr>
+<td><code>429</code></td>
+<td>Rate limited</td>
+</tr>
+<tr>
+<td><code>500</code></td>
+<td>Internal server error</td>
+</tr>
+</tbody>
+</table>
 
 
 

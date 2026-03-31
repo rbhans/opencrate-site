@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#opencrate-bms-docs" class="md-skip">
+        <a href="#opencrate-bms" class="md-skip">
           Skip to content
         </a>
       
@@ -292,10 +292,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#start-here" class="md-nav__link">
+  <a href="#capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start here
+        Capabilities
       
     </span>
   </a>
@@ -303,10 +303,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platform-at-a-glance" class="md-nav__link">
+  <a href="#architecture-at-a-glance" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platform at a glance
+        Architecture at a glance
       
     </span>
   </a>
@@ -314,10 +314,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#product-shape" class="md-nav__link">
+  <a href="#module-map" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Product shape
+        Module map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation sections
       
     </span>
   </a>
@@ -1117,10 +1128,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#start-here" class="md-nav__link">
+  <a href="#capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start here
+        Capabilities
       
     </span>
   </a>
@@ -1128,10 +1139,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platform-at-a-glance" class="md-nav__link">
+  <a href="#architecture-at-a-glance" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platform at a glance
+        Architecture at a glance
       
     </span>
   </a>
@@ -1139,10 +1150,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#product-shape" class="md-nav__link">
+  <a href="#module-map" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Product shape
+        Module map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation sections
       
     </span>
   </a>
@@ -1169,37 +1191,91 @@
   
 
 
-<h1 id="opencrate-bms-docs">OpenCrate BMS Docs<a class="headerlink" href="#opencrate-bms-docs" title="Permanent link">&para;</a></h1>
-<p>OpenCrate is an open-source building management system built in Rust. The product combines a protocol layer, an application platform, a web/API surface, and an operator UI into one deployable system.</p>
-<p>Use these docs to understand how the platform is put together and how the main subsystems fit.</p>
-<h2 id="start-here">Start here<a class="headerlink" href="#start-here" title="Permanent link">&para;</a></h2>
+<h1 id="opencrate-bms">OpenCrate BMS<a class="headerlink" href="#opencrate-bms" title="Permanent link">&para;</a></h1>
+<p>OpenCrate is an open-source building automation system written in Rust. It ships as a single binary that combines protocol bridges, application services, a REST/WebSocket API, and an operator desktop UI. The goal is to provide a credible open-source alternative to proprietary BAS platforms like Niagara.</p>
+<h2 id="capabilities">Capabilities<a class="headerlink" href="#capabilities" title="Permanent link">&para;</a></h2>
+<p><strong>Protocol integration</strong> -- BACnet (IP, MS/TP, SC, BBMD/Foreign) and Modbus (TCP, RTU) with multi-network support, device discovery, COV subscriptions, priority-array writes, trend-log backfill, FC8/FC22/FC23/FC24/FC43 Modbus diagnostics, and a profile library for auto-mapping registers.</p>
+<p><strong>Point management</strong> -- Unified node model (Site/Space/Equip/Point/VirtualPoint) with tag-based querying, protocol bindings, history, overrides, and COV-filtered change detection.</p>
+<p><strong>Alarms and notifications</strong> -- Alarm evaluation with severity and shelving, rule-based notification routing with tiered escalation, exponential retry, and delivery via webhook, email (SMTP or HTTP), and SMS (Twilio or generic POST).</p>
+<p><strong>Scheduling</strong> -- Weekly schedules and exception calendars with BACnet device sync (read/write from remote schedule objects).</p>
+<p><strong>Logic engine</strong> -- Visual block programming compiled to Rhai scripts. Block types include math, logic, compare, timing, PID, point read/write, and custom script. Programs execute on a 1-second tick with event-driven triggers.</p>
+<p><strong>Reporting</strong> -- Seven report section types, four built-in templates, inline-CSS HTML rendering, scheduled SMTP delivery, and on-demand generation via API or UI.</p>
+<p><strong>Energy analytics</strong> -- Trapezoidal consumption calculation, 15-minute sliding-window demand, degree-day regression with CV-RMSE/NMBE, flat/TOU/tiered/demand cost rates, and daily/monthly rollups on a 15-minute background cycle.</p>
+<p><strong>Fault detection and diagnostics</strong> -- Rule-based FDD engine with built-in seed rules, fault store, and operator UI.</p>
+<p><strong>MQTT publishing</strong> -- Per-broker event loops with auto-reconnect, template-based topic engine, and hot-reload configuration.</p>
+<p><strong>Webhook delivery</strong> -- Provider-specific formatters for Slack (Block Kit), Teams (Adaptive Cards), PagerDuty (Events API v2), ntfy, and generic JSON with HMAC-SHA256 signing. Per-endpoint event toggles, severity/tag filters, retry with backoff, and global pause.</p>
+<p><strong>Export</strong> -- Pluggable export pipeline (Postgres target available via <code>export-postgres</code> feature).</p>
+<p><strong>Commissioning</strong> -- Per-device session workflow with auto-generated checklists (read-verify, write-verify, alarm-verify, schedule-verify) and status lifecycle tracking.</p>
+<p><strong>Auth and audit</strong> -- JWT authentication with per-IP rate limiting, role-based permissions, and a full audit log.</p>
+<h2 id="architecture-at-a-glance">Architecture at a glance<a class="headerlink" href="#architecture-at-a-glance" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>Rust (2021 edition)</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>Single binary, feature-gated surfaces</td>
+</tr>
+<tr>
+<td>UI toolkit</td>
+<td>Dioxus (desktop and browser targets)</td>
+</tr>
+<tr>
+<td>API framework</td>
+<td>Axum with tower middleware</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>SQLite per domain (17 databases under <code>data/</code>)</td>
+</tr>
+<tr>
+<td>Event system</td>
+<td>Broadcast bus, capacity 4096, <code>Arc&lt;Event&gt;</code></td>
+</tr>
+<tr>
+<td>Store pattern</td>
+<td>mpsc command channel + dedicated SQLite thread (20 stores)</td>
+</tr>
+<tr>
+<td>API surface</td>
+<td>80+ REST endpoints, WebSocket at <code>/ws</code></td>
+</tr>
+<tr>
+<td>GUI components</td>
+<td>46 components under <code>src/gui/</code></td>
+</tr>
+<tr>
+<td>Modules</td>
+<td>25 (see module map below)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="module-map">Module map<a class="headerlink" href="#module-map" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Protocol layer        bridge/  protocol/  discovery/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Node model            node/  store/  config/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Application services  energy/  fdd/  logic/  reporting/  notification/  mqtt/  webhook/  export/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Scheduling &amp; alarms   (within store/ and event/)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Infrastructure        event/  plugin/  platform/  auth/  health/  backup/  project/  weather/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Haystack              haystack/  atlas/ (optional)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Surfaces              gui/ (optional)  api/ (optional)
+</code></pre></div>
+<h2 id="documentation-sections">Documentation sections<a class="headerlink" href="#documentation-sections" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Read <a href="getting-started/">Getting Started</a> for the fastest path to a local instance.</li>
-<li>Read <a href="architecture/">Architecture</a> for the high-level platform shape.</li>
-<li>Read <a href="features/">Features</a> for the major operator-facing capabilities.</li>
-<li>Read <a href="deployment/">Deployment</a> for packaging and runtime expectations.</li>
-<li>Read <a href="integrations/">Integrations</a> for protocols and external connectors.</li>
-<li>Read <a href="developer/">Developer Notes</a> for the codebase map and extension points.</li>
+<li><a href="getting-started/">Getting Started</a> -- Build, run, and verify a local instance.</li>
+<li><a href="architecture/">Architecture</a> -- Platform shape, event bus, store pattern, node model.</li>
+<li><a href="features/">Features</a> -- Operator-facing capabilities in detail.</li>
+<li><a href="integrations/">Integrations</a> -- BACnet, Modbus, MQTT, webhooks, and export targets.</li>
+<li><a href="deployment/">Deployment</a> -- Packaging, configuration, and runtime expectations.</li>
+<li><a href="developer/">Developer Notes</a> -- Codebase map, extension points, and contribution guide.</li>
 </ul>
-<h2 id="platform-at-a-glance">Platform at a glance<a class="headerlink" href="#platform-at-a-glance" title="Permanent link">&para;</a></h2>
-<p>OpenCrate currently centers around a Rust application with these major layers:</p>
-<ul>
-<li>Protocol bridges for BACnet and Modbus, with shared abstractions under <code>src/protocol/</code> and <code>src/bridge/</code></li>
-<li>Application services for alarms, schedules, history, logic, reporting, notifications, MQTT, webhook delivery, and FDD</li>
-<li>SQLite-backed stores under <code>src/store/</code> for persisted configuration and runtime history</li>
-<li>An Axum HTTP API and WebSocket stream under <code>src/api/</code></li>
-<li>A Dioxus-based operator UI under <code>src/gui/</code></li>
-</ul>
-<h2 id="product-shape">Product shape<a class="headerlink" href="#product-shape" title="Permanent link">&para;</a></h2>
-<p>The codebase currently supports:</p>
-<ul>
-<li>Device discovery and commissioning</li>
-<li>Point history, schedules, alarms, and acknowledgements</li>
-<li>Notification routing, webhook delivery, and MQTT publishing</li>
-<li>Reporting, energy tracking, and fault detection</li>
-<li>Desktop and API-enabled deployments from one Rust workspace</li>
-</ul>
-<p>These docs focus on the current architecture reflected in this repository rather than a future roadmap.</p>
 <hr />
 <p><em>Last synced: 2026-03-31</em></p>
 

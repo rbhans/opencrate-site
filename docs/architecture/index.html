@@ -464,10 +464,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#major-subsystems" class="md-nav__link">
+  <a href="#three-layer-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Major subsystems
+        Three-Layer Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three-Layer Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-1-modelstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1: ModelState
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2-automationstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2: AutomationState
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-3-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3: Platform
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-driven-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event-Driven Design
       
     </span>
   </a>
@@ -475,10 +525,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architectural-style" class="md-nav__link">
+  <a href="#module-map" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architectural style
+        Module Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design Principles
       
     </span>
   </a>
@@ -1119,10 +1180,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#major-subsystems" class="md-nav__link">
+  <a href="#three-layer-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Major subsystems
+        Three-Layer Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three-Layer Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layer-1-modelstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1: ModelState
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2-automationstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2: AutomationState
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-3-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3: Platform
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-driven-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event-Driven Design
       
     </span>
   </a>
@@ -1130,10 +1241,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architectural-style" class="md-nav__link">
+  <a href="#module-map" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architectural style
+        Module Map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design Principles
       
     </span>
   </a>
@@ -1172,25 +1294,271 @@
 
 
 <h1 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h1>
-<p>OpenCrate is organized around a central platform state shared across protocol services, persistence, the API layer, and the operator UI.</p>
-<h2 id="major-subsystems">Major subsystems<a class="headerlink" href="#major-subsystems" title="Permanent link">&para;</a></h2>
+<p>OpenCrate BMS is structured as a layered, event-driven platform. Every subsystem communicates through a central event bus, stores manage their own SQLite databases on dedicated threads, and the entire runtime is assembled by a single <code>init_platform</code> call.</p>
+<h2 id="three-layer-model">Three-Layer Model<a class="headerlink" href="#three-layer-model" title="Permanent link">&para;</a></h2>
+<p>The platform is organized into three layers, each building on the one below it.</p>
+<h3 id="layer-1-modelstate">Layer 1: ModelState<a class="headerlink" href="#layer-1-modelstate" title="Permanent link">&para;</a></h3>
+<p>The foundation. Owns the core data structures that every other layer reads and writes.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PointStore</strong></td>
+<td>In-memory thread-safe point values and status</td>
+</tr>
+<tr>
+<td><strong>NodeStore</strong></td>
+<td>Unified object model (sites, spaces, equipment, points) with hot cache + SQLite</td>
+</tr>
+<tr>
+<td><strong>EventBus</strong></td>
+<td>Broadcast channel (4096 capacity) distributing <code>Arc&lt;Event&gt;</code> to all subscribers</td>
+</tr>
+<tr>
+<td><strong>PluginRegistry</strong></td>
+<td>Protocol plugins, history backends, alarm evaluators registered at startup</td>
+</tr>
+<tr>
+<td><strong>LoadedScenario</strong></td>
+<td>The resolved scenario config and device profiles</td>
+</tr>
+<tr>
+<td><strong>HealthRegistry</strong></td>
+<td>Thread-safe health status map (Healthy, Degraded, Down, Unknown)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="layer-2-automationstate">Layer 2: AutomationState<a class="headerlink" href="#layer-2-automationstate" title="Permanent link">&para;</a></h3>
+<p>Fourteen domain-specific stores, each running its own SQLite database on a dedicated thread. These stores implement the building automation logic: alarms, schedules, history, energy analytics, fault detection, reporting, and integrations.</p>
+<table>
+<thead>
+<tr>
+<th>Store</th>
+<th>Domain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alarm_store</td>
+<td>Alarm lifecycle and acknowledgment</td>
+</tr>
+<tr>
+<td>schedule_store</td>
+<td>Time-based scheduling</td>
+</tr>
+<tr>
+<td>history_store</td>
+<td>Point value history (trend data)</td>
+</tr>
+<tr>
+<td>entity_store</td>
+<td>Legacy entity persistence</td>
+</tr>
+<tr>
+<td>discovery_store</td>
+<td>Protocol device/point discovery state</td>
+</tr>
+<tr>
+<td>program_store</td>
+<td>Logic engine programs and execution logs</td>
+</tr>
+<tr>
+<td>notification_store</td>
+<td>Alarm routing recipients, rules, shelving</td>
+</tr>
+<tr>
+<td>mqtt_store</td>
+<td>MQTT broker configs and topic patterns</td>
+</tr>
+<tr>
+<td>commissioning_store</td>
+<td>Device commissioning sessions and checklists</td>
+</tr>
+<tr>
+<td>report_store</td>
+<td>Report definitions, schedules, executions</td>
+</tr>
+<tr>
+<td>energy_store</td>
+<td>Meters, rates, baselines, rollups</td>
+</tr>
+<tr>
+<td>webhook_store</td>
+<td>Webhook endpoints and delivery logs</td>
+</tr>
+<tr>
+<td>fdd_store</td>
+<td>Fault detection rules and fault history</td>
+</tr>
+<tr>
+<td>export_store</td>
+<td>External export targets (InfluxDB, Postgres)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="layer-3-platform">Layer 3: Platform<a class="headerlink" href="#layer-3-platform" title="Permanent link">&para;</a></h3>
+<p>The assembled runtime. <code>init_platform</code> wires everything together and returns:</p>
 <ul>
-<li><code>src/platform.rs</code> creates the long-lived runtime services and shared handles</li>
-<li><code>src/store/</code> contains SQLite-backed persistence for configuration, runtime history, and feature modules</li>
-<li><code>src/event/</code> distributes internal events used by notifications, MQTT, webhooks, and other automation</li>
-<li><code>src/api/</code> exposes REST and WebSocket endpoints when the <code>api</code> feature is enabled</li>
-<li><code>src/gui/</code> contains the Dioxus desktop and web UI components</li>
-<li><code>src/bridge/</code>, <code>src/protocol/</code>, and protocol-specific modules handle field integration</li>
+<li><strong>Platform</strong> containing ModelState, AutomationState, and the DiscoveryService</li>
+<li><strong>BridgeHandles</strong> containing active protocol bridges (BACnet networks, Modbus bridges)</li>
 </ul>
-<h2 id="architectural-style">Architectural style<a class="headerlink" href="#architectural-style" title="Permanent link">&para;</a></h2>
-<p>The project is intentionally modular rather than microservice-based:</p>
-<ul>
-<li>one deployable Rust application</li>
-<li>many feature-oriented modules</li>
-<li>explicit persistence per domain</li>
-<li>event-driven reactions for cross-cutting concerns</li>
-</ul>
-<p>That keeps local development and self-hosted deployment simple while still letting features evolve independently.</p>
+<p>For concurrent access from the API server and GUI, Platform is wrapped in <strong>SharedPlatform</strong> -- a Clone-able struct that includes a <strong>BridgeRegistry</strong> mapping protocol strings to <code>Box&lt;dyn ProtocolBridgeHandle&gt;</code>.</p>
+<h2 id="event-driven-design">Event-Driven Design<a class="headerlink" href="#event-driven-design" title="Permanent link">&para;</a></h2>
+<p>The EventBus is the nervous system. When a point value changes, an alarm fires, or a device goes offline, an event is broadcast to all subscribers. No subsystem polls another -- they react.</p>
+<p>Six permanent subscribers run as background tasks:</p>
+<table>
+<thead>
+<tr>
+<th>Subscriber</th>
+<th>Reacts To</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AlarmRouter</strong></td>
+<td>AlarmRaised, AlarmCleared, AlarmAcknowledged</td>
+<td>Dispatches notifications (email, SMS, webhook)</td>
+</tr>
+<tr>
+<td><strong>MqttPublisher</strong></td>
+<td>ValueChanged, AlarmRaised, AlarmCleared, DeviceDown, DeviceDiscovered</td>
+<td>Publishes JSON to MQTT brokers</td>
+</tr>
+<tr>
+<td><strong>WebhookDispatcher</strong></td>
+<td>AlarmRaised, AlarmCleared, AlarmAcknowledged, DeviceDown, DeviceRecovered, FddFaultRaised, FddFaultCleared</td>
+<td>Sends HTTP POSTs to registered endpoints</td>
+</tr>
+<tr>
+<td><strong>ExportPublisher</strong></td>
+<td>ValueChanged, AlarmRaised, AlarmCleared</td>
+<td>Writes to InfluxDB and/or Postgres</td>
+</tr>
+<tr>
+<td><strong>FddEngine</strong></td>
+<td>ValueChanged</td>
+<td>Evaluates fault detection rules</td>
+</tr>
+<tr>
+<td><strong>ExecutionEngine</strong></td>
+<td>ValueChanged (OnChange triggers)</td>
+<td>Runs logic programs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="module-map">Module Map<a class="headerlink" href="#module-map" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>src/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  platform.rs          # init_platform, Platform, SharedPlatform
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  lib.rs               # Feature gates, public API surface
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  event/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    bus.rs             # EventBus, Event enum (18 variants)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  node/
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    mod.rs             # Node, NodeType, NodeCapabilities, ProtocolBinding
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  store/               # 20 stores (mpsc + SQLite pattern)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    point_store.rs     # In-memory point values
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    node_store.rs      # Node hierarchy (hot cache + SQLite)
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    history_store.rs   # Trend data
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    alarm_store.rs     # Alarms
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    schedule_store.rs  # Schedules
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    entity_store.rs    # Legacy entities
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    discovery_store.rs # Discovery state
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    program_store.rs   # Logic programs
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    notification_store.rs
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    mqtt_store.rs
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    commissioning_store.rs
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    report_store.rs
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    energy_store.rs
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    webhook_store.rs
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    fdd_store.rs
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    export_store.rs
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    user_store.rs
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    audit_store.rs
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    override_store.rs
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>  plugin/
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    mod.rs             # PluginRegistry, traits
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  bridge/
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    traits.rs          # PointSource trait
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    bacnet.rs          # BACnet bridge (multi-network)
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>    modbus.rs          # Modbus bridge (TCP + RTU)
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    backoff.rs         # Shared exponential backoff
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>  protocol/
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    mod.rs             # RawProtocolValue, ProtocolDriver, ValueSink, ProfileNormalizer
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>  discovery/
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>    mod.rs             # DiscoveryService, DiscoveredDevice, DiscoveredPoint
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>    bacnet_adapter.rs  # BACnet -&gt; generic discovery
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>    bacnet_units.rs    # ASHRAE unit mapping
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>  api/
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>    mod.rs             # Axum router, ApiState, middleware
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    routes/            # 17 route modules
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>  gui/
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    app.rs             # Dioxus desktop app
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    state.rs           # AppState
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>    components/        # UI components
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>  logic/
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>    mod.rs             # Block types, DAG model
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>    compiler.rs        # Topological sort -&gt; Rhai codegen
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>    engine.rs          # ExecutionEngine (periodic + event-driven)
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    store.rs           # ProgramStore
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>  notification/
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>    router.rs          # AlarmRouter
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>    channels/          # Email, SMS, webhook channels
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>  mqtt/
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>    publisher.rs       # MqttPublisher
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>    topic.rs           # Topic template engine
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>  webhook/
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>    dispatcher.rs      # WebhookDispatcher
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>    model.rs           # Endpoint, delivery models
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    providers.rs       # Slack, Teams, PagerDuty, ntfy formatters
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>  reporting/
+<a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>    engine.rs          # ReportEngine (7 section types)
+<a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>    renderer.rs        # HTML renderer (inline CSS, dark theme)
+<a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>    templates.rs       # 4 built-in templates
+<a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>
+<a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>  energy/
+<a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>    consumption.rs     # Trapezoidal kW -&gt; kWh
+<a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>    demand.rs          # 15-min sliding window peak
+<a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>    degree_days.rs     # HDD/CDD regression
+<a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>    cost.rs            # Rate structures
+<a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>    rollup.rs          # Daily/monthly orchestration
+<a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>    scheduler.rs       # 15-min background cycle
+<a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>
+<a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>  fdd/                 # Fault Detection &amp; Diagnostics
+<a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>  export/              # External data export (InfluxDB, Postgres)
+<a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>
+<a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>  config/
+<a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>    profile.rs         # DeviceProfile, Point definitions
+<a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a>    scenario.rs        # ScenarioConfig, DeviceInstance
+<a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a>    loader.rs          # resolve_scenario()
+<a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a>    template.rs        # SystemTemplate, auto_create_nodes, auto-tagging
+<a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a>
+<a id="__codelineno-0-99" name="__codelineno-0-99" href="#__codelineno-0-99"></a>  auth.rs              # Permissions, JWT, roles
+</code></pre></div>
+<h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h2>
+<p><strong>No dynamic loading.</strong> All plugins and protocol drivers are registered at compile time via the PluginRegistry. This keeps the binary self-contained and avoids unsafe FFI.</p>
+<p><strong>One store, one database.</strong> Each store owns a single SQLite file. No store reads another store's database. Cross-store coordination happens through the EventBus.</p>
+<p><strong>Zero-copy events.</strong> Events are wrapped in <code>Arc&lt;Event&gt;</code> so broadcast to N subscribers does not clone payloads.</p>
+<p><strong>Graceful degradation.</strong> HealthRegistry tracks per-component status. If a BACnet network goes down, the rest of the platform continues operating. Bridge reconnection uses exponential backoff.</p>
+<p><strong>Feature gates.</strong> The API server (<code>api</code> feature) and GUI (<code>gui</code> feature) are optional. The core platform can run headless.</p>
 <h2 id="read-next">Read next<a class="headerlink" href="#read-next" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="platform-overview/">Platform Overview</a></li>

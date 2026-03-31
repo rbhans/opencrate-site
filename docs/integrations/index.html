@@ -871,10 +871,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#field-protocols" class="md-nav__link">
+  <a href="#design-philosophy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Field protocols
+        Design philosophy
       
     </span>
   </a>
@@ -882,10 +882,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-delivery-and-messaging" class="md-nav__link">
+  <a href="#field-protocols-inbound" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External delivery and messaging
+        Field protocols (inbound)
       
     </span>
   </a>
@@ -893,10 +893,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-approach" class="md-nav__link">
+  <a href="#outbound-connectors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design approach
+        Outbound connectors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-integrations-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How integrations compose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-new-integrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding new integrations
       
     </span>
   </a>
@@ -1119,10 +1141,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#field-protocols" class="md-nav__link">
+  <a href="#design-philosophy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Field protocols
+        Design philosophy
       
     </span>
   </a>
@@ -1130,10 +1152,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-delivery-and-messaging" class="md-nav__link">
+  <a href="#field-protocols-inbound" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External delivery and messaging
+        Field protocols (inbound)
       
     </span>
   </a>
@@ -1141,10 +1163,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#design-approach" class="md-nav__link">
+  <a href="#outbound-connectors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design approach
+        Outbound connectors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-integrations-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How integrations compose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-new-integrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding new integrations
       
     </span>
   </a>
@@ -1172,28 +1216,91 @@
 
 
 <h1 id="integrations">Integrations<a class="headerlink" href="#integrations" title="Permanent link">&para;</a></h1>
-<h2 id="field-protocols">Field protocols<a class="headerlink" href="#field-protocols" title="Permanent link">&para;</a></h2>
-<p>The codebase already includes first-class support for:</p>
+<p>OpenCrate connects to building equipment through field protocols and pushes data outward through connectors. This section covers both sides.</p>
+<h2 id="design-philosophy">Design philosophy<a class="headerlink" href="#design-philosophy" title="Permanent link">&para;</a></h2>
+<p>Every integration in OpenCrate follows the same internal contract:</p>
+<ol>
+<li>
+<p><strong>Protocol drivers push raw values into the event bus.</strong> A BACnet poll, a Modbus register read, or a COV notification all produce the same internal <code>ValueChanged</code> event. Nothing downstream knows or cares which wire the value arrived on.</p>
+</li>
+<li>
+<p><strong>Outbound connectors subscribe to the event bus.</strong> MQTT publishers, webhook dispatchers, and export connectors all receive the same stream of events and decide independently what to forward. Adding a new outbound path never requires changing protocol code.</p>
+</li>
+<li>
+<p><strong>Stores are protocol-agnostic.</strong> The node store, point store, alarm store, and history store hold normalized data. Protocol-specific details live in <code>ProtocolBinding</code> metadata on each node, not in the storage layer.</p>
+</li>
+</ol>
+<p>This separation means you can run a mixed BACnet/Modbus site and have every point appear identically in the GUI, the API, the alarm engine, and every outbound connector.</p>
+<h2 id="field-protocols-inbound">Field protocols (inbound)<a class="headerlink" href="#field-protocols-inbound" title="Permanent link">&para;</a></h2>
+<p>OpenCrate includes production-ready drivers for the two dominant building automation protocols:</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Transports</th>
+<th>Discovery</th>
+<th>Write-back</th>
+<th>Diagnostics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BACnet</strong></td>
+<td>IP, IPv6, Foreign/BBMD, BACnet/SC, MS/TP</td>
+<td>Who-Is scan, object list enumeration</td>
+<td>WriteProperty with priority array</td>
+<td>Intrinsic reporting, event polling, alarm acknowledgment</td>
+</tr>
+<tr>
+<td><strong>Modbus</strong></td>
+<td>TCP, RTU (RS-485)</td>
+<td>Configured device scan, TCP unit ID probe, RTU bus scan</td>
+<td>Write with read-back verification</td>
+<td>FC8 diagnostics, FC43 device identification</td>
+</tr>
+</tbody>
+</table>
+<p>Both protocols support multi-network configurations, per-device reconnection with exponential backoff, and parallel scanning. See <a href="field-protocols/">Field Protocols</a> for full details.</p>
+<h2 id="outbound-connectors">Outbound connectors<a class="headerlink" href="#outbound-connectors" title="Permanent link">&para;</a></h2>
+<p>Data flows out of OpenCrate through three paths:</p>
+<table>
+<thead>
+<tr>
+<th>Connector</th>
+<th>Purpose</th>
+<th>Transport</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MQTT</strong></td>
+<td>Real-time telemetry streaming</td>
+<td>MQTT 3.1.1 via rumqttc</td>
+</tr>
+<tr>
+<td><strong>Webhooks</strong></td>
+<td>Event notifications to external services</td>
+<td>HTTP POST with retry</td>
+</tr>
+<tr>
+<td><strong>Export</strong></td>
+<td>Bulk data replication to time-series databases</td>
+<td>InfluxDB HTTP API, PostgreSQL</td>
+</tr>
+</tbody>
+</table>
+<p>All three are EventBus subscribers. They start automatically during platform initialization and run for the lifetime of the process. See <a href="outbound-connectors/">Outbound Connectors</a> for configuration and behavior details.</p>
+<h2 id="how-integrations-compose">How integrations compose<a class="headerlink" href="#how-integrations-compose" title="Permanent link">&para;</a></h2>
+<p>A typical site might run:</p>
 <ul>
-<li>BACnet/IP, BACnet/SC, and BACnet MS/TP related flows</li>
-<li>Modbus TCP and RTU related flows</li>
+<li>Two BACnet/IP networks and one Modbus RTU bus as field protocols</li>
+<li>MQTT publishing to a Grafana dashboard</li>
+<li>Slack webhooks for critical alarms</li>
+<li>InfluxDB export for long-term analytics</li>
 </ul>
-<p>Those integrations are organized so transport details stay close to the protocol layer while the rest of the platform works against more stable internal abstractions.</p>
-<h2 id="external-delivery-and-messaging">External delivery and messaging<a class="headerlink" href="#external-delivery-and-messaging" title="Permanent link">&para;</a></h2>
-<p>OpenCrate can also publish or deliver events outward through:</p>
-<ul>
-<li>MQTT</li>
-<li>webhooks</li>
-<li>email and SMS channels for notifications</li>
-</ul>
-<h2 id="design-approach">Design approach<a class="headerlink" href="#design-approach" title="Permanent link">&para;</a></h2>
-<p>The integration design is intentionally layered:</p>
-<ul>
-<li>field protocols bring data into the platform</li>
-<li>stores persist the important state</li>
-<li>event-driven delivery pushes meaningful changes back out</li>
-</ul>
-<p>That separation is what lets new outbound integrations reuse existing alarm, history, and fault events instead of reinventing source logic.</p>
+<p>All of these run concurrently within a single OpenCrate process. The event bus handles fan-out: one <code>AlarmRaised</code> event triggers the MQTT publisher, the webhook dispatcher, and the export connector simultaneously, each applying its own filters and formatting independently.</p>
+<h2 id="adding-new-integrations">Adding new integrations<a class="headerlink" href="#adding-new-integrations" title="Permanent link">&para;</a></h2>
+<p>Protocol drivers implement the <code>ProtocolDriver</code> trait and push values through a <code>ValueSink</code>. Outbound connectors subscribe to the <code>EventBus</code> and filter for relevant event variants. Neither requires modifying existing code. See the <a href="../developer/">Developer Guide</a> for the full walkthrough.</p>
 
 
 
