@@ -1,0 +1,25 @@
+:root {
+  --md-primary-fg-color: #c47a5a;
+  --md-primary-fg-color--light: #e09070;
+  --md-primary-fg-color--dark: #9d5e42;
+  --md-accent-fg-color: #e8a87c;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #0f0e0c;
+  --md-default-bg-color--light: #1a1816;
+  --md-default-fg-color: #f0ebe3;
+  --md-default-fg-color--light: #9e9589;
+  --md-typeset-a-color: #e09070;
+}
+
+.md-header,
+.md-tabs {
+  background: #161411;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  letter-spacing: -0.02em;
+}
