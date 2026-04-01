@@ -1,0 +1,61 @@
+{
+  "updated": "2026-03-31",
+  "tiers": [
+    {
+      "id": "tier-1",
+      "name": "Production Deployment",
+      "description": "Blockers for putting OpenCrate on a real building.",
+      "status": "done",
+      "items": [
+        { "id": "1.1", "name": "Alarm Routing & Notifications", "status": "done", "completed": "2026-03-24", "tags": ["notifications", "alarms"] },
+        { "id": "1.2", "name": "Alarm Journal & Search", "status": "done", "completed": "2026-03-24", "tags": ["alarms"] },
+        { "id": "1.3", "name": "Calendar & Exception Schedules", "status": "done", "completed": "2026-03-24", "tags": ["schedules"] },
+        { "id": "1.4", "name": "Data Export", "status": "done", "completed": "2026-03-24", "tags": ["export"] },
+        { "id": "1.5", "name": "Commissioning Workflow", "status": "done", "completed": "2026-03-25", "tags": ["commissioning"] },
+        { "id": "1.6a", "name": "MQTT Integration", "status": "done", "completed": "2026-03-25", "tags": ["mqtt", "integration"] },
+        { "id": "1.6b", "name": "Webhook Subscriptions", "status": "done", "completed": "2026-03-30", "tags": ["webhooks", "integration"] },
+        { "id": "1.6c", "name": "Database Export Connectors", "status": "done", "completed": "2026-03-30", "tags": ["export", "integration"] },
+        { "id": "1.6d", "name": "Cloud Platform Bridges", "status": "planned", "tags": ["integration", "cloud"] }
+      ]
+    },
+    {
+      "id": "structural",
+      "name": "Structural Health",
+      "description": "Maintainability and architecture improvements before adding more features.",
+      "status": "in-progress",
+      "items": [
+        { "id": "S.1", "name": "Module Decomposition", "status": "planned", "description": "Break up bacnet.rs (3800 lines), discovery_view.rs (2950), schedule_store.rs (2780)", "tags": ["architecture"] },
+        { "id": "S.2", "name": "Publish Protocol Crates", "status": "planned", "description": "Move rustbac-*/rustmod-* from local path deps to crates.io", "tags": ["architecture", "release"] },
+        { "id": "S.3", "name": "Plugin API Surface", "status": "planned", "description": "Extract stable plugin traits into standalone crate with semver", "tags": ["plugins", "architecture"] },
+        { "id": "S.4", "name": "Event Bus Durability", "status": "planned", "description": "Optional persistent backend for crash recovery and multi-site", "tags": ["architecture", "events"] }
+      ]
+    },
+    {
+      "id": "tier-2",
+      "name": "Competitive Parity",
+      "description": "Expected by users comparing OpenCrate to commercial platforms.",
+      "status": "in-progress",
+      "items": [
+        { "id": "2.1", "name": "Reporting Engine", "status": "done", "completed": "2026-03-26", "tags": ["reporting"] },
+        { "id": "2.2", "name": "Enhanced Graphics", "status": "planned", "description": "SVG schematics, symbol library, data-bound dynamic graphics", "tags": ["gui"] },
+        { "id": "2.3", "name": "Energy Analytics", "status": "done", "completed": "2026-03-29", "tags": ["energy"] },
+        { "id": "2.4", "name": "Fault Detection & Diagnostics", "status": "done", "completed": "2026-03-30", "tags": ["fdd"] },
+        { "id": "2.5", "name": "Multi-Site Management", "status": "planned", "depends": "S.4", "description": "Enterprise supervisor, cross-site alarms, centralized users", "tags": ["multi-site"] },
+        { "id": "2.6", "name": "Mobile Access", "status": "planned", "description": "Responsive web UI, PWA, push notifications", "tags": ["mobile", "gui"] }
+      ]
+    },
+    {
+      "id": "tier-3",
+      "name": "Differentiation & Growth",
+      "description": "Would set OpenCrate apart from commercial platforms.",
+      "status": "planned",
+      "items": [
+        { "id": "3.1", "name": "AI-Assisted Commissioning", "status": "planned", "description": "LLM auto-naming, config review, equipment type inference", "tags": ["ai", "commissioning"] },
+        { "id": "3.2", "name": "Protocol Expansion", "status": "planned", "description": "KNX, Lonworks, DALI, EnOcean, Zigbee/Z-Wave", "tags": ["protocols"] },
+        { "id": "3.3", "name": "Controller Runtime", "status": "planned", "description": "Run on embedded Linux as standalone controller", "tags": ["embedded", "hardware"] },
+        { "id": "3.4", "name": "Open Plugin Ecosystem", "status": "planned", "depends": "S.3", "description": "WASM plugin runtime, registry, marketplace", "tags": ["plugins"] },
+        { "id": "3.5", "name": "Digital Twin / 3D", "status": "planned", "description": "IFC/gbXML import, 3D viewer with live data overlay", "tags": ["3d", "gui"] }
+      ]
+    }
+  ]
+}
