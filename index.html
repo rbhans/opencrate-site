@@ -127,6 +127,35 @@ h2 em { font-style: italic; color: var(--accent); }
 .stat-label { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
 
 /* ── Coming Soon ── */
+/* ── Roadmap ── */
+.roadmap { padding: 120px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+.rm-stats { display: flex; gap: 24px; margin-bottom: 32px; }
+.rm-stat { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; display: flex; align-items: center; gap: 6px; }
+.rm-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.rm-dot.done { background: #5A9A6B; }
+.rm-dot.progress { background: #5A8AC4; }
+.rm-dot.planned { background: var(--text-muted); }
+.rm-progress { height: 4px; border-radius: 2px; background: var(--border); margin-bottom: 40px; display: flex; overflow: hidden; }
+.rm-progress .done { background: #5A9A6B; }
+.rm-progress .progress { background: #5A8AC4; }
+.rm-tier { margin-bottom: 28px; }
+.rm-tier-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.rm-tier-name { font-family: var(--serif); font-size: 22px; font-weight: 400; letter-spacing: -0.01em; }
+.rm-badge { font-family: var(--mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 9px; border-radius: 100px; }
+.rm-badge.done { background: rgba(90,154,107,0.12); border: 1px solid rgba(90,154,107,0.25); color: #5A9A6B; }
+.rm-badge.in-progress { background: rgba(90,138,196,0.12); border: 1px solid rgba(90,138,196,0.25); color: #5A8AC4; }
+.rm-badge.planned { background: var(--accent-glow); border: 1px solid var(--border-accent); color: var(--text-muted); }
+.rm-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.rm-item { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); transition: border-color 0.2s; font-size: 13px; font-weight: 400; color: var(--text-secondary); }
+.rm-item:hover { border-color: rgba(196,122,90,0.2); }
+.rm-item.done { border-color: rgba(90,154,107,0.2); }
+.rm-item.done .rm-check { border-color: #5A9A6B; background: #5A9A6B; }
+.rm-item.done .rm-check::after { content: '\2713'; color: #0F0E0C; font-size: 8px; font-weight: 700; }
+.rm-check { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.rm-item.done .rm-label { color: var(--text-muted); }
+.rm-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rm-date { font-family: var(--mono); font-size: 9px; color: #5A9A6B; margin-left: auto; flex-shrink: 0; letter-spacing: 0.02em; }
+
 .coming-soon { padding: 140px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; }
 .cs-content { max-width: 540px; margin: 0 auto; text-align: center; }
 .cs-content h2 { margin-bottom: 20px; }
@@ -205,7 +234,7 @@ h2 em { font-style: italic; color: var(--accent); }
         <a href="#capabilities">What It Does</a>
         <a href="#architecture">Under the Hood</a>
         <a href="docs/">Docs</a>
-        <a href="roadmap.html">Roadmap</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="https://github.com/rbhans/opencrate-bms" target="_blank" class="nav-cta">GitHub</a>
       </div>
     </div>
@@ -504,6 +533,17 @@ h2 em { font-style: italic; color: var(--accent); }
     </div>
   </section>
 
+  <!-- Roadmap -->
+  <section class="roadmap" id="roadmap">
+    <div class="section-inner">
+      <div class="section-label">Progress</div>
+      <h2>What's <em>done</em> and what's next.</h2>
+      <div class="rm-stats" id="rm-stats"></div>
+      <div class="rm-progress" id="rm-progress"></div>
+      <div id="rm-tiers"></div>
+    </div>
+  </section>
+
   <!-- Coming Soon -->
   <section class="coming-soon" id="notify">
     <div class="section-inner">
@@ -511,12 +551,8 @@ h2 em { font-style: italic; color: var(--accent); }
         <div class="section-label">Status</div>
         <h2>Coming soon.</h2>
         <p>
-          OpenCrate is a hobby project &mdash; part curiosity, part excuse to dig into
-          the pieces of building automation I never got to work on professionally.
-          Writing a BACnet stack, designing an alarm engine, figuring out how schedule
-          sync actually works &mdash; it's been the best way to learn. It's getting close
-          to a first public release. If you'd like to know when it's available, leave
-          your email below.
+          Getting close to a first public release. If you'd like to know
+          when it's available, leave your email below.
         </p>
         <div class="cs-form">
           <input type="email" placeholder="your@email.com" class="cs-input" disabled>
@@ -546,5 +582,36 @@ h2 em { font-style: italic; color: var(--accent); }
     </div>
   </footer>
 
+  <script>
+(async function() {
+  const res = await fetch('docs-src/roadmap.json');
+  if (!res.ok) return;
+  const data = await res.json();
+  const all = data.tiers.flatMap(t => t.items);
+  const done = all.filter(i => i.status === 'done').length;
+  const total = all.length;
+  const planned = all.filter(i => i.status === 'planned').length;
+
+  document.getElementById('rm-stats').innerHTML =
+    `<div class="rm-stat"><span class="rm-dot done"></span>${done} done</div>` +
+    `<div class="rm-stat"><span class="rm-dot planned"></span>${planned} planned</div>` +
+    `<div class="rm-stat" style="color:var(--text-muted)">${done}/${total} total</div>`;
+
+  document.getElementById('rm-progress').innerHTML =
+    `<div class="done" style="width:${(done/total*100).toFixed(1)}%"></div>` +
+    `<div class="progress" style="width:${((total-done-planned)/total*100).toFixed(1)}%"></div>`;
+
+  document.getElementById('rm-tiers').innerHTML = data.tiers.map(tier => {
+    const td = tier.items.filter(i => i.status === 'done').length;
+    const tt = tier.items.length;
+    const st = td === tt ? 'done' : td > 0 ? 'in-progress' : 'planned';
+    const label = td === tt ? 'Complete' : td > 0 ? td + '/' + tt : 'Planned';
+    const items = tier.items.map(i =>
+      `<div class="rm-item ${i.status}"><span class="rm-check"></span><span class="rm-label">${i.name}</span>${i.completed ? '<span class="rm-date">' + i.completed.slice(5) + '</span>' : ''}</div>`
+    ).join('');
+    return `<div class="rm-tier"><div class="rm-tier-head"><span class="rm-badge ${st}">${label}</span><span class="rm-tier-name">${tier.name}</span></div><div class="rm-items">${items}</div></div>`;
+  }).join('');
+})();
+  </script>
 </body>
 </html>
